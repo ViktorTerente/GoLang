@@ -1,0 +1,163 @@
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+
+	/*
+	   Задача №1
+	   Вход:
+	       расстояние(50 - 10000 км),
+	       расход в литрах (5-25 литров) на 100 км и
+	       стоимость бензина(константа) = 48 руб
+
+	   Выход: стоимость поездки в рублях
+	*/
+
+	const cost float64 = 48.00 // стоимость бензина
+
+	var (
+		rate   int     // расход в литрах
+		dist   int     // расстояние
+		result float64 // стоимость поездки
+	)
+
+	fmt.Println("Введите расстояние")
+
+	fmt.Scanf("%d\n", &dist)
+
+	if int(dist) > 49 && int(dist) < 10001 {
+
+		fmt.Println("Введите расход в литрах")
+
+		fmt.Scanf("%d\n", &rate)
+
+		if rate > 4 && rate < 26 {
+			result = float64(dist) / 100 * float64(rate) * cost
+			fmt.Println(result)
+		} else {
+			fmt.Println("Расход должен быть в диапазоне 5 - 25 литров на 100 км")
+		}
+
+	} else {
+		fmt.Println("Расстояние должно быть в диапазоне 50 - 10000 км")
+	}
+
+	/*
+	   Задача № 2. Получить реверсную запись трехзначного числа
+	   Пример:
+	   вход: 346, выход: 643
+	   вход: 100, выход: 001
+	*/
+	var (
+		numType  string
+		number   int
+		firstNum int
+		lastNum  int
+		result   int
+	)
+
+	fmt.Println("Введите трёхзначное число")
+
+	fmt.Scanf("%d\n", &number)
+
+	// очень странное поведение, если мы вводит 1a3
+	numType = fmt.Sprintf("%T", number)
+
+	fmt.Println(numType)
+
+	if number/1000 > 0 {
+		fmt.Println("Число знаков более трёх")
+	} else {
+		firstNum = number / 100
+		//fmt.Println(firstNum)
+
+		lastNum = number % 10
+		//fmt.Println(lastNum)
+
+		result = lastNum*100 + (number%100 - lastNum + firstNum)
+
+		fmt.Printf("%03d", result)
+
+	}
+
+	/*
+	   Задача № 3. Вывести на экран в порядке возрастания три введенных числа
+	   Пример:
+	   Вход: 1, 9, 2
+	   Выход: 1, 2, 9
+	*/
+
+		var (
+			firstNum  int
+			secondNum int
+			lastNum   int
+		)
+
+		fmt.Scanf("%d\n", &firstNum)
+
+		fmt.Scanf("%d\n", &secondNum)
+
+		fmt.Scanf("%d\n", &lastNum)
+
+		if firstNum <= secondNum && firstNum <= lastNum {
+			if secondNum < lastNum {
+				fmt.Printf("%d, %d, %d", firstNum, secondNum, lastNum)
+			} else {
+				fmt.Printf("%d, %d, %d", firstNum, lastNum, secondNum)
+			}
+		} else if secondNum <= firstNum && secondNum <= lastNum {
+			if firstNum < lastNum {
+				fmt.Printf("%d, %d, %d", secondNum, firstNum, lastNum)
+			} else {
+				fmt.Printf("%d, %d, %d", secondNum, lastNum, firstNum)
+			}
+		} else if lastNum <= firstNum && lastNum <= secondNum {
+			if firstNum < secondNum {
+				fmt.Printf("%d, %d, %d", lastNum, firstNum, secondNum)
+			} else {
+				fmt.Printf("%d, %d, %d", lastNum, secondNum, firstNum)
+			}
+		}
+
+	/*
+	   Задача № 4. Проверить, является ли четырехзначное число палиндромом
+	   Пример:
+	   Вход: 1221  Выход: 1221 - палиндром
+	   Вход: 1234  Выход: 1234 - не палиндром
+	*/
+
+	var (
+		number    int
+		firstNum  int
+		lastNum   int
+		secondNum int
+		thirdNum  int
+	)
+
+	fmt.Println("Введите число")
+
+	fmt.Scanf("%d\n", &number)
+	// без проверки на разрядность
+
+	firstNum = number / 1000
+	lastNum = number % 10
+
+	if firstNum == lastNum {
+
+		secondNum = (number - firstNum*1000) / 100
+		thirdNum = (number % 100) / 10
+
+		if secondNum == thirdNum {
+			fmt.Println("yes")
+		} else {
+			fmt.Println("no")
+		}
+
+	} else {
+		fmt.Println("no")
+	}
+
+}
