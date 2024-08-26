@@ -30,21 +30,15 @@ func getBottleEnds(cnt int) {
 	var compl string
 	var modCnt int
 
-	if cnt > 99 {
-		modCnt = cnt % 100
-	} else {
-		modCnt = cnt % 10
-	}
+	modCnt = (cnt % 100) % 10
 
 	switch {
-	case modCnt > 10 && modCnt < 20:
+	case modCnt > 4 && modCnt < 20 || modCnt == 0:
 		compl = "бутылок"
 	case modCnt == 1:
 		compl = "бутылка"
 	case modCnt > 1 && modCnt < 5:
 		compl = "бутылки"
-	case (modCnt > 4 && modCnt < 10) || modCnt == 0:
-		compl = "бутылок"
 	}
 
 	fmt.Printf("%d %s\n", cnt, compl)
@@ -193,7 +187,7 @@ func printChessDesk(cnt int) {
 func main() {
 
 	// бутылки
-	getBottleEnds(115)
+	getBottleEnds(21)
 
 	// это треугольник
 	isTriangle := isTriangle(1, 1, 1, 5, 5, 1)
