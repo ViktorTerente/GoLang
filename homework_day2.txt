@@ -28,20 +28,20 @@ func getBottleEnds(cnt int) {
 	}
 
 	var compl string
-	var modCnt int
-
-	modCnt = (cnt % 100) % 10
+	modTen := cnt % 10
+	modHoundred := cnt % 100
 
 	switch {
-	case modCnt > 4 && modCnt < 20 || modCnt == 0:
-		compl = "бутылок"
-	case modCnt == 1:
+	case (modTen == 1 && modHoundred != 11) || (modTen == 1 && modHoundred > 20):
 		compl = "бутылка"
-	case modCnt > 1 && modCnt < 5:
+	case (modTen > 1 && modTen < 5) && (modHoundred > 20 || modHoundred < 5):
 		compl = "бутылки"
+	default:
+		compl = "бутылок"
 	}
 
 	fmt.Printf("%d %s\n", cnt, compl)
+
 }
 
 /*
@@ -186,11 +186,12 @@ func printChessDesk(cnt int) {
 
 func main() {
 
-	// бутылки
-	getBottleEnds(21)
+	for i := 0; i < 201; i++ {
+		getBottleEnds(i)
+	}
 
 	// это треугольник
-	isTriangle := isTriangle(1, 1, 1, 5, 5, 1)
+	/*isTriangle := isTriangle(1, 1, 1, 5, 5, 1)
 
 	fmt.Println("isTriangle - ", isTriangle)
 
@@ -204,6 +205,6 @@ func main() {
 	fmt.Println("isRectangTriangle - ", isRectangTriangle)
 
 	// шахм.доска
-	printChessDesk(8)
+	printChessDesk(8)*/
 
 }
