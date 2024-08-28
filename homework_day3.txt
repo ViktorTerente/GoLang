@@ -90,6 +90,7 @@ func checkPasswd() (bool, error) {
 		hasUpperCase bool
 		hasSpecial   bool
 		passIsValid  bool
+		passErrors   string
 	)
 	for i := 1; i < 6; i++ {
 
@@ -101,7 +102,7 @@ func checkPasswd() (bool, error) {
 		passLen = len(pass)
 
 		if passLen < 8 || passLen > 15 {
-			fmt.Printf("Попытка № %d \n%s ", i, "Длина пароля должна быть от 8 до 15 символов\n")
+			fmt.Printf("Попытка № %d\n%s\n", i, "Длина пароля должна быть от 8 до 15 символов")
 			continue
 		}
 
@@ -123,9 +124,30 @@ func checkPasswd() (bool, error) {
 			}
 		}
 
-		if !hasDigit || !hasLowerCase || !hasUpperCase || !hasSpecial {
+		if !hasDigit {
+			passErrors += fmt.Sprintln("Пароль должен содержать цифры!")
+		}
 
-			fmt.Printf("Попытка № %d.  %s\n", i, "Invalid password")
+		if !hasLowerCase {
+			passErrors += fmt.Sprintln("Пароль должен содержать буквы нижнего регистра!")
+		}
+
+		if !hasUpperCase {
+			passErrors += fmt.Sprintln("Пароль должен содержать буквы верхнего регистра!")
+		}
+
+		if !hasSpecial {
+			passErrors += fmt.Sprintln("Пароль должен содержать спец.символы!")
+		}
+
+		if len(passErrors) > 0 {
+
+			fmt.Printf("Попытка № %d\n%s", i, passErrors)
+			passErrors = ""
+			hasDigit = false
+			hasLowerCase = false
+			hasSpecial = false
+			hasUpperCase = false
 			continue
 
 		} else {
@@ -149,7 +171,7 @@ func main() {
 	}*/
 
 	//-----------задача 1--------------------------
-	fmt.Println("Введите код")
+	/*fmt.Println("Введите код")
 	var key string
 	fmt.Scanf("%s", &key)
 
@@ -159,11 +181,11 @@ func main() {
 		fmt.Printf(err.Error())
 	}
 
-	fmt.Println(value)
+	fmt.Println(value)*/
 	//--------- --Задача 1-------------------------
 
 	//-----------задача 2
-	//checkPasswd()
+	checkPasswd()
 	//-------  --Задача 2
 
 }
