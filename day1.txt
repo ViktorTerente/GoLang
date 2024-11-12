@@ -8,7 +8,6 @@ import (
 	"net/http"
 )
 
-// Структура для ответа в формате JSON
 type Response struct {
 	Result string `json:"result"`
 }
@@ -60,7 +59,7 @@ func secondHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-// Получаем 2 случайных числа
+// 2 случайных числа
 func getTwoRandomNumbers() (int, int) {
 	return generateRandomNumber(), generateRandomNumber()
 }
@@ -98,13 +97,6 @@ func mulHandler(w http.ResponseWriter, r *http.Request) {
 // div
 func divHandler(w http.ResponseWriter, r *http.Request) {
 	num1, num2 := getTwoRandomNumbers()
-	if num2 == 0 {
-		response := Response{
-			Result: "Ошибка: Деление на ноль невозможно",
-		}
-		json.NewEncoder(w).Encode(response)
-		return
-	}
 	result := float64(num1) / float64(num2)
 	response := Response{
 		Result: fmt.Sprintf("%.2f", result),
