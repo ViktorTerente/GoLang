@@ -8,14 +8,19 @@ import (
 	"net/http"
 )
 
+// Структура для JSON-ответа
 type Response struct {
 	Result string `json:"result"`
 }
 
-var port = "1234"
+var (
+	port         = "1234"
+	firstNumber  int
+	secondNumber int
+)
 
 func main() {
-
+	// Маршруты
 	http.HandleFunc("/info", infoHandler)
 	http.HandleFunc("/first", firstHandler)
 	http.HandleFunc("/second", secondHandler)
@@ -43,31 +48,25 @@ func generateRandomNumber() int {
 
 // first
 func firstHandler(w http.ResponseWriter, r *http.Request) {
-	number := generateRandomNumber()
+	firstNumber = generateRandomNumber()
 	response := Response{
-		Result: fmt.Sprintf("%d", number),
+		Result: fmt.Sprintf("%d", firstNumber),
 	}
 	json.NewEncoder(w).Encode(response)
 }
 
 // second
 func secondHandler(w http.ResponseWriter, r *http.Request) {
-	number := generateRandomNumber()
+	secondNumber = generateRandomNumber()
 	response := Response{
-		Result: fmt.Sprintf("%d", number),
+		Result: fmt.Sprintf("%d", secondNumber),
 	}
 	json.NewEncoder(w).Encode(response)
 }
 
-// 2 случайных числа
-func getTwoRandomNumbers() (int, int) {
-	return generateRandomNumber(), generateRandomNumber()
-}
-
 // add
 func addHandler(w http.ResponseWriter, r *http.Request) {
-	num1, num2 := getTwoRandomNumbers()
-	result := num1 + num2
+	result := firstNumber + secondNumber
 	response := Response{
 		Result: fmt.Sprintf("%d", result),
 	}
@@ -76,8 +75,7 @@ func addHandler(w http.ResponseWriter, r *http.Request) {
 
 // sub
 func subHandler(w http.ResponseWriter, r *http.Request) {
-	num1, num2 := getTwoRandomNumbers()
-	result := num1 - num2
+	result := firstNumber - secondNumber
 	response := Response{
 		Result: fmt.Sprintf("%d", result),
 	}
@@ -86,8 +84,7 @@ func subHandler(w http.ResponseWriter, r *http.Request) {
 
 // mul
 func mulHandler(w http.ResponseWriter, r *http.Request) {
-	num1, num2 := getTwoRandomNumbers()
-	result := num1 * num2
+	result := firstNumber * secondNumber
 	response := Response{
 		Result: fmt.Sprintf("%d", result),
 	}
@@ -96,8 +93,14 @@ func mulHandler(w http.ResponseWriter, r *http.Request) {
 
 // div
 func divHandler(w http.ResponseWriter, r *http.Request) {
-	num1, num2 := getTwoRandomNumbers()
-	result := float64(num1) / float64(num2)
+	if secondNumber == 0 {
+		response := Response{
+			Result: "Ошибка деления на 0",
+		}
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+	result := float64(firstNumber) / float64(secondNumber)
 	response := Response{
 		Result: fmt.Sprintf("%.2f", result),
 	}
