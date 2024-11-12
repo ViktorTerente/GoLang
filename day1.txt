@@ -8,7 +8,6 @@ import (
 	"net/http"
 )
 
-// Структура для JSON-ответа
 type Response struct {
 	Result string `json:"result"`
 }
